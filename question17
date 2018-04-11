@@ -1,0 +1,62 @@
+#include<stdio.h>
+#include<conio.h>
+main()
+{
+	int n,bt[20],wt[20],tat[20],avwt=0,avtat=0,i,j,input;
+	printf("Enter total number of processes:");
+    scanf("%d",&n);
+    printf("\nEnter Process Burst Time\n");
+    for(i=0;i<n;i++)
+    {
+        printf("P[%d]:",i+1);
+        scanf("%d",&bt[i]);
+    }
+    printf("\nPriority mention below:");
+	printf("\n1).Teacher");
+	printf("\n2).student");
+	printf("\npress 1 for teacher and 2 for student");
+	i=1;
+	wt[0]=0;  
+	do
+	{
+	printf("\nEnter Person Identity");
+	scanf("%d",&input);
+    j=0;
+    while(j<i)
+    {
+	wt[i]=0;
+	switch(input)
+	{
+		case 1:
+		   wt[i]+=bt[j];
+		   //cout<<"\n book have been issued by teacher:";
+		   break;
+		case 2:
+		    wt[i]+=bt[j];
+		    //cout<<"\n book have been issued by student:";	
+		    break;
+		default:
+			printf("wrong input!!!!");
+	}
+	
+	j++;
+    }
+	i++;	
+	}while(i<=n);
+	
+	printf("\nProcess\t\tBurst Time\tWaiting Time\tTurnaround Time");
+    for(i=0;i<n;i++)
+    {
+        tat[i]=bt[i]+wt[i];
+        avwt+=wt[i];
+        avtat+=tat[i];
+        //printf("\nP[",i+1,"]","\t\t",bt[i],"\t\t",wt[i],"\t\t",tat[i]);
+        printf("\nP[%d] \t\t%d\t\t%d\t\t%d",i+1,bt[i],wt[i],tat[i]);
+    }
+ 
+    avwt/=i;
+    avtat/=i;
+    printf("\n\nAverage Waiting Time: %d",avwt);
+    printf("\nAverage Turnaround Time: %d",avtat);
+	
+}
