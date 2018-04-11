@@ -29,11 +29,11 @@ main()
 	{
 		case 1:
 		   wt[i]+=bt[j];
-		   //cout<<"\n book have been issued by teacher:";
+		   //book have been issued by teacher
 		   break;
 		case 2:
 		    wt[i]+=bt[j];
-		    //cout<<"\n book have been issued by student:";	
+		    //book have been issued by student	
 		    break;
 		default:
 			printf("wrong input!!!!");
