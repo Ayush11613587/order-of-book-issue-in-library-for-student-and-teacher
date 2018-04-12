@@ -50,7 +50,6 @@ main()
         tat[i]=bt[i]+wt[i];
         avwt+=wt[i];
         avtat+=tat[i];
-        //printf("\nP[",i+1,"]","\t\t",bt[i],"\t\t",wt[i],"\t\t",tat[i]);
         printf("\nP[%d] \t\t%d\t\t%d\t\t%d",i+1,bt[i],wt[i],tat[i]);
     }
  
