@@ -1,61 +1,87 @@
 #include<stdio.h>
 #include<conio.h>
-main()
+int main()
 {
-	int n,bt[20],wt[20],tat[20],avwt=0,avtat=0,i,j,input;
-	printf("Enter total number of processes:");
-    scanf("%d",&n);
-    printf("\nEnter Process Burst Time\n");
-    for(i=0;i<n;i++)
-    {
-        printf("P[%d]:",i+1);
-        scanf("%d",&bt[i]);
-    }
-    printf("\nPriority mention below:");
-	printf("\n1).Teacher");
-	printf("\n2).student");
-	printf("\npress 1 for teacher and 2 for student");
-	i=1;
-	wt[0]=0;  
-	do
+	int n1,n2;
+	printf("Enter total no. of teachers: \n");
+	scanf("%d",&n1);
+	int ta[n1],tb[n1];
+	printf("Enter The Teacher Processes according to their arrival time: \n\n");
+	for(int i=0;i<n1;i++)
 	{
-	printf("\nEnter Person Identity");
-	scanf("%d",&input);
-    j=0;
-    while(j<i)
-    {
-	wt[i]=0;
-	switch(input)
-	{
-		case 1:
-		   wt[i]+=bt[j];
-		   //book have been issued by teacher
-		   break;
-		case 2:
-		    wt[i]+=bt[j];
-		    //book have been issued by student	
-		    break;
-		default:
-			printf("wrong input!!!!");
+		printf("Enter Arrival time of teacher T[%d] : ",i+1);
+		scanf("%d",&ta[i]);
+		printf("Enter Burst time of teacher  T[%d] : ",i+1);
+		scanf("%d",&tb[i]);
+		if(i>0 && ta[i-1]>ta[i])
+		{
+			printf("\nyou enter wrong enter according to arrival time: \n\n");
+			i--;
+		}
 	}
-	
-	j++;
-    }
-	i++;	
-	}while(i<=n);
-	
-	printf("\nProcess\t\tBurst Time\tWaiting Time\tTurnaround Time");
-    for(i=0;i<n;i++)
-    {
-        tat[i]=bt[i]+wt[i];
-        avwt+=wt[i];
-        avtat+=tat[i];
-        printf("\nP[%d] \t\t%d\t\t%d\t\t%d",i+1,bt[i],wt[i],tat[i]);
-    }
- 
-    avwt/=i;
-    avtat/=i;
-    printf("\n\nAverage Waiting Time: %d",avwt);
-    printf("\nAverage Turnaround Time: %d",avtat);
-	
+	printf("Enter total no. of student : \n");
+	scanf("%d",&n2);
+	printf("Enter max wait time for student process: \n");
+	int max_wt;
+	scanf("%d",&max_wt);
+	int sa[n2],sb[n2];
+	printf("Enter The Student Processes according to their arrival time: \n\n");
+	for(int j=0;j<n2;j++)
+	{
+		printf("Enter Arrival time for student process S[%d] : ",j+1);
+		scanf("%d",&sa[j]);
+		printf("Enter Burst time for student process S[%d]: ",j+1);
+		scanf("%d",&sb[j]);
+		if(j>0 && sa[j-1]>sa[j])
+		{
+			printf("\nyou enter wrong enter according to arrival time: \n\n");
+			j--;
+		}
+	}
+	printf("details of the teacher processes are: \n\n\t\t\tArrival Time\tBurst Time");
+	for(int i=0;i<n1;i++)
+	{
+		printf("\nTeacher T[%d] : \t %d \t\t%d",i+1,ta[i],tb[i]);
+	}
+	printf("\ndetails of the Student processes are: \n\n\t\t\tArrival Time\tBurst Time");
+	for(int j=0;j<n2;j++)
+	{
+		printf("\nStudent S[%d] :\t%d\t\t%d",j+1,sa[j],sb[j]);
+	}
+	printf("\n\n\t\t\tWaiting Time\tTurnaround Time\n");
+	int i=0;//teacher
+	int j=0;//student
+	int min;
+	if(sa[0]<ta[0])
+		min=sa[0];
+	else
+		min=ta[0];
+	while(i<n1 || j<n2)
+	{
+		if(i<n1 && (ta[i]<=sa[j] || ta[i]<=min))
+		{
+			if((j<n2 && (min-sa[j])>=max_wt) && min-ta[i]<max_wt)
+			{
+				printf("Student S[%d] \t%d\t\t%d\n",j+1,min-sa[j],min-sa[j]+sb[j]);
+				min+=sb[j];
+				j++;
+			}
+			else if(i<n1)
+			{
+				printf("Teacher T[%d]\t%d\t\t%d\n",i+1,min-ta[i],min-ta[i]+tb[i]);
+				min+=tb[i];
+				i++;
+			}
+			else
+			continue;
+		}
+		else if(j<n2)
+		{
+			printf("Student S[%d]\t%d\t\t%d\n",j+1,min-sa[j],min-sa[j]+sb[j]);
+			min+=sb[j];
+			j++;
+		}
+		else
+		continue;
+	}
 }
